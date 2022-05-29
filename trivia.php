@@ -37,16 +37,19 @@
 
 <?php
  if(isset($_POST['saveDetail'])){
-     echo $option1 = $_POST['option1'];
-     echo $option2 = $_POST['option2'];
-     echo $option3 = $_POST['option3'];
-     echo $option4 = $_POST['option4'];
-     echo $option5 = $_POST['option5'];
-     echo $option6 = $_POST['option6'];
-     echo $option7 = $_POST['option7'];
-     echo $option8 = $_POST['option8'];
-     echo $option9 = $_POST['option9'];
-     echo $option10 = $_POST['option10'];
+     $result = 0;
+     $query_answer = mysqli_query($con,"SELECT * FROM answers");
+     while($result_answer = mysqli_fetch_array($query_answer)){
+         for($x = 1; $x<= 10; $x++){
+            if(!empty($_POST["option$x"])){
+                if($result_answer['answer_rid'] == $_POST["option$x"]){
+                    $result++;
+                }
+            }
+         }
+        
+     }
+     echo $result;
  }
 
 ?>
