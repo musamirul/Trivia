@@ -19,10 +19,11 @@ if(isset($_POST['access'])){
     $result_access = mysqli_fetch_array($query_access);
     
     if($result_access>0){
-        echo 'found';
+        echo 'you have answer the question';
     }else{
         $query_submit = mysqli_query($con,"INSERT INTO user(user_ic, user_staffid) VALUES ('$ic','$staffNo')");
         $_SESSION['ic'] = $ic;
+
         echo '<script>window.location.href="trivia.php"</script>';
     }
     

@@ -1,4 +1,11 @@
-<?php include("Interface/header.php"); ?>
+<?php 
+    include("Interface/header.php"); 
+    if(!isset($_SESSION['ic'])){
+        session_unset();
+        header("Location:../login.php");
+    }
+    $ic_number = $_SESSION['ic'];
+?>
 
 <?php
     $count = 1;
@@ -49,7 +56,20 @@
          }
         
      }
-     echo $result;
+     $result;
+     $wrong_answer = 10 - $result;
+     date_default_timezone_set("Asia/Kuala_Lumpur");
+     $date = date("Y-m-d h:i:sa");
+
+     $query_user = mysqli_query($con, "SELECT * FROM user WHERE user_ic = '$ic_number'");
+     $result_user = mysqli_fetch_array($query_user);
+     $user_id = $result_user['user_id'];
+
+     $query_history = mysqli_query($con,"INSERT INTO history(history_score, history_right,history_wrong, history_date, fk_history_user_id, fk_history_trivia_id) 
+     VALUES ('$result','$result','$wrong_answer','$date','$user_id','2')");
+
+     session_unset();
+     echo '<script>window.location.href="login.php"</script>';
  }
 
 ?>
