@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: May 30, 2022 at 03:17 PM
+-- Generation Time: Jun 12, 2022 at 05:24 PM
 -- Server version: 5.7.31
 -- PHP Version: 7.3.21
 
@@ -24,6 +24,27 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `admin_acc`
+--
+
+DROP TABLE IF EXISTS `admin_acc`;
+CREATE TABLE IF NOT EXISTS `admin_acc` (
+  `admin_acc` int(254) NOT NULL AUTO_INCREMENT,
+  `admin_username` varchar(50) NOT NULL,
+  `admin_password` varchar(50) NOT NULL,
+  PRIMARY KEY (`admin_acc`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `admin_acc`
+--
+
+INSERT INTO `admin_acc` (`admin_acc`, `admin_username`, `admin_password`) VALUES
+(1, 'username', 'password');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `answers`
 --
 
@@ -33,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `answers` (
   `answer_rid` varchar(254) NOT NULL,
   `fk_answer_question_id` int(40) NOT NULL,
   PRIMARY KEY (`answer_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `answers`
@@ -49,7 +70,9 @@ INSERT INTO `answers` (`answer_id`, `answer_rid`, `fk_answer_question_id`) VALUE
 (8, 'bogkr51746852502', 7),
 (9, 'yxznl43696214663', 8),
 (10, '5hvmw39732272370', 9),
-(11, 'xkrj793807443568', 10);
+(11, 'xkrj793807443568', 10),
+(12, 'cw96830919154611', 11),
+(13, 'uzj5k54538141829', 12);
 
 -- --------------------------------------------------------
 
@@ -90,7 +113,7 @@ CREATE TABLE IF NOT EXISTS `options` (
   `option_list` varchar(254) NOT NULL,
   `fk_option_question_id` int(40) NOT NULL,
   PRIMARY KEY (`option_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=41 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=49 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `options`
@@ -136,7 +159,15 @@ INSERT INTO `options` (`option_id`, `question_rid`, `option_list`, `fk_option_qu
 (37, 'xkrj793807443568', 'myvi', 10),
 (38, '89cue28573919611', 'tesla', 10),
 (39, 'abd7e26541406870', 'ford', 10),
-(40, 'q923v58044017508', 'mevi', 10);
+(40, 'q923v58044017508', 'mevi', 10),
+(41, 'cw96830919154611', 'ye', 11),
+(42, '349v876858481653', 'yeee', 11),
+(43, 'il52a90517855042', 'yeeeee', 11),
+(44, 'vdyqs58016490492', 'yeeeeeee', 11),
+(45, 'uzj5k54538141829', 'to', 12),
+(46, 'sjm6216457247376', 'toooo', 12),
+(47, 'i4dhs47151162396', 'toooooo', 12),
+(48, '8n6mb7232576105', 'weeeeee', 12);
 
 -- --------------------------------------------------------
 
@@ -151,7 +182,7 @@ CREATE TABLE IF NOT EXISTS `questions` (
   `question_choice` int(40) NOT NULL,
   `fk_question_trivia_id` int(40) NOT NULL,
   PRIMARY KEY (`question_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `questions`
@@ -167,7 +198,9 @@ INSERT INTO `questions` (`question_id`, `question`, `question_choice`, `fk_quest
 (7, 'when im born', 4, 2),
 (8, 'whos kpj ceo', 4, 2),
 (9, 'what is cat', 4, 2),
-(10, 'what car im buyin', 4, 2);
+(10, 'what car im buyin', 4, 2),
+(11, 'test', 4, 2),
+(12, 'test2', 4, 2);
 
 -- --------------------------------------------------------
 
@@ -182,15 +215,17 @@ CREATE TABLE IF NOT EXISTS `trivia_type` (
   `type_total` int(40) NOT NULL,
   `total_minute` int(40) NOT NULL,
   `type_date` varchar(40) NOT NULL,
+  `type_priority` varchar(50) NOT NULL,
   PRIMARY KEY (`type_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `trivia_type`
 --
 
-INSERT INTO `trivia_type` (`type_id`, `type_title`, `type_total`, `total_minute`, `type_date`) VALUES
-(2, 'test', 20, 20, '29-05-2022');
+INSERT INTO `trivia_type` (`type_id`, `type_title`, `type_total`, `total_minute`, `type_date`, `type_priority`) VALUES
+(2, 'test', 20, 20, '29-05-2022', 'yes'),
+(5, 'anniversary', 10, 10, '12-06-2022', 'no');
 
 -- --------------------------------------------------------
 
@@ -201,18 +236,17 @@ INSERT INTO `trivia_type` (`type_id`, `type_title`, `type_total`, `total_minute`
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `user_id` int(40) NOT NULL AUTO_INCREMENT,
-  `user_ic` varchar(40) NOT NULL,
+  `user_name` varchar(40) NOT NULL,
   `user_staffid` varchar(40) NOT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`user_id`, `user_ic`, `user_staffid`) VALUES
-(1, '910630105599', '2016670'),
-(2, '910630105591', '2016671');
+INSERT INTO `user` (`user_id`, `user_name`, `user_staffid`) VALUES
+(4, 'test1', '123');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

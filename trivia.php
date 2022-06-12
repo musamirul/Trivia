@@ -1,16 +1,21 @@
 <?php 
     include("Interface/header.php"); 
-    if(!isset($_SESSION['ic'])){
+    if(!isset($_SESSION['staffNo'])){
         session_unset();
         header("Location:../login.php");
     }
-    $ic_number = $_SESSION['ic'];
+    $ic_number = $_SESSION['staffNo'];
 ?>
 
 <?php
+    //SELECT TRIVIA Priority with yes
+    $query_trivia = mysqli_query($con,"SELECT * FROM trivia_type WHERE type_priority = 'yes'");
+    $result_trivia = mysqli_fetch_array($query_trivia);
+    $type_id = $result_trivia['type_id'];
+
     $count = 1;
     //show all questions
-    $query_question = mysqli_query($con,"SELECT * FROM questions WHERE fk_question_trivia_id = '2' ORDER BY RAND()");
+    $query_question = mysqli_query($con,"SELECT * FROM questions WHERE fk_question_trivia_id = '$type_id' ORDER BY RAND()");
     ?>
         <form method="POST"> 
     <?php
@@ -61,7 +66,7 @@
      date_default_timezone_set("Asia/Kuala_Lumpur");
      $date = date("Y-m-d h:i:sa");
 
-     $query_user = mysqli_query($con, "SELECT * FROM user WHERE user_ic = '$ic_number'");
+     $query_user = mysqli_query($con, "SELECT * FROM user WHERE user_staffid = '$ic_number'");
      $result_user = mysqli_fetch_array($query_user);
      $user_id = $result_user['user_id'];
 

@@ -1,6 +1,9 @@
 <?php
-    include("Interface/header.php");
-    $_SESSION['trivia'];
+
+    if($_SESSION['trivia']==''){
+        header("home.php?page=Admin_ManageTrivia");
+    }
+    $id = $_SESSION['trivia'];
 ?>
 <h2>Create Question</h2>
 <form method="post">
@@ -14,21 +17,47 @@
         <tr>
             <th>Question ID</th>
             <th>Question</th>
-            <th>Question Choice</th>
+            <th>Num Choice</th>
+            <th>Option</th>
+            <th>Answer</th>
             <th>Action</th>
         </tr>
     </thead>
     <tbody>
         <?php
             //display all table data
-            $query_showData = mysqli_query($con,"SELECT * FROM questions");
+            $query_showData = mysqli_query($con,"SELECT * FROM questions WHERE fk_question_trivia_id = '$id'");
             while($result_showData = mysqli_fetch_array($query_showData)){
             $question_id = $result_showData['question_id'];
+            
+
         ?>
         <tr>
             <td><?php echo $result_showData['question_id']; ?></td>
             <td><?php echo $result_showData['question']; ?></td>
             <td><?php echo $result_showData['question_choice']; ?></td>
+            <td>
+                <ul class="list-group list-group-horizontal">
+                <?php 
+                    $query_showOption = mysqli_query($con,"SELECT * FROM options WHERE fk_option_question_id='$question_id'");
+                    while($result_showOption = mysqli_fetch_array($query_showOption)){
+                ?>
+                    <li class="list-group-item"><?php echo $result_showOption['option_list'] ?></li>
+                <?php
+                    }
+                ?>
+                </ul>
+            </td>
+            <td>
+                <?php 
+                    $query_showAnswer = mysqli_query($con,"SELECT * FROM answers WHERE fk_answer_question_id = '$question_id'");
+                    $result_showAnswer = mysqli_fetch_array($query_showAnswer);
+                    $answer_rid = $result_showAnswer['answer_rid'];
+                    $query_showOptionA = mysqli_query($con,"SELECT * FROM options WHERE question_rid='$answer_rid'");
+                    $result_showOptionA = mysqli_fetch_array($query_showOptionA);
+                    echo $result_showOptionA['option_list'];
+                ?>
+            </td>
             <td>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#QuestionModal<?php echo $question_id ?>">Add Answer</button>
             </td>
@@ -126,7 +155,7 @@
         $query_addwrongThree_opt = mysqli_query($con,"INSERT INTO options(question_rid, option_list, fk_option_question_id) 
         VALUES ('$wrongThree_rid','$wrong_three','$Quest_id')");
 
-        echo '<script>window.location.href="Admin_AddQuestion.php"</script>';
+        echo '<script>window.location.href="home.php?page=Admin_AddQuestion"</script>';
 
     }
 ?>
@@ -139,7 +168,6 @@
         $query_updateQuestion = mysqli_query($con,"INSERT INTO questions(question, question_choice, fk_question_trivia_id) 
         VALUES ('$question','$choice','$trivia')");
 
-        echo '<script>window.location.href="Admin_AddQuestion.php"</script>';
+        echo '<script>window.location.href="home.php?page=Admin_AddQuestion"</script>';
     }
 ?>
-<?php include("Interface/footer.php") ?>
