@@ -10,6 +10,7 @@
         <button class="btn btn-primary" name="access" type="submit">Lets Go</button>
     </div>
 </form>
+
 <?php 
 if(isset($_POST['access'])){
     $name = $_POST['name'];
@@ -31,5 +32,7 @@ if(isset($_POST['access'])){
 }
 
 ?>
-
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/myjs.js"></script>
+<script type="text/javascript" src="js/sweetalert.js"></script>
 <?php include("Interface/footer.php"); ?>

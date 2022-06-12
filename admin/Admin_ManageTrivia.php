@@ -78,17 +78,32 @@
         <div class="modal-body">
         <form method="POST">
             <div class="row mb-3 mt-4">
-                <input type="text" class="form-control" name="title" placeholder="Enter Trivia Title" required/>
+                <label class="col-form-label">Trivia Title</label>
+                <div class="col-sm-12">
+                    <input type="text" class="form-control" name="title" placeholder="Enter Trivia Title" required/>
+                </div>
             </div>
             <div class="row mb-3">
-                <input type="number" class="form-control" name="total" placeholder="Enter Total Question" required/>
+                <label class="col-form-label">Total Question</label>
+                <div class="col-sm-12">
+                    <input type="number" class="form-control" name="total" placeholder="Enter Total Question" required/>
+                </div>
             </div>
             <div class="row mb-3">
-                <input type="number" class="form-control" name="minute" placeholder="Enter minutes to complete" required/>    
+                <label class="col-form-label">Exam Time Limit</label>
+                <div class="col-sm-12">
+                <select class="form-select" class="form-select form-select-sm" name="minute">
+                    <option value="10">10 Minutes</option>
+                    <option value="20">20 Minutes</option>
+                    <option value="30">30 Minutes</option>
+                    <option value="50">50 Minutes</option>
+                    <option value="60">60 Minutes</option>
+                </select>  
+                </div>
             </div>
             <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Display</label>
-                <div class="col-sm-10">
+                <label class="col-form-label">Display</label>
+                <div class="col-sm-12">
                       <select class="form-select" class="form-select form-select-sm" name="display_option">
                         <option value="no">No</option>
                         <option value="yes">Yes</option>                                                    
