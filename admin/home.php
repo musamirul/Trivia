@@ -9,6 +9,9 @@
         if($page == "Admin_AddQuestion"){
             include("Admin_AddQuestion.php");
         }
+        if($page == "Admin_ViewRank"){
+            include("Admin_ViewRank.php");
+        }
     }
 ?>
 

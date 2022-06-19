@@ -40,8 +40,8 @@
                     <ul class="collapse list-group list-group-flush ps-4" id="userCollapse">
                     	<li class="list-group-item py-1"><a href="home.php?page=Admin_ManageTrivia" class="text-decoration-none text-reset"><i style="font-size:14px" class="bi bi-person-fill me-3">
                           </i>Add Trivia</a></li>
-                      
                     </ul>
+                    <a href="home.php?page=Admin_ViewRank" class="list-group-item list-group-item-action py-2" aria-current="true"><i class="bi bi-info-square me-3"></i><span>View Rank</span></a>
 
     
 

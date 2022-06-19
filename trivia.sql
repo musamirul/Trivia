@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jun 12, 2022 at 05:24 PM
+-- Generation Time: Jun 19, 2022 at 05:45 PM
 -- Server version: 5.7.31
 -- PHP Version: 7.3.21
 
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `answers` (
   `answer_rid` varchar(254) NOT NULL,
   `fk_answer_question_id` int(40) NOT NULL,
   PRIMARY KEY (`answer_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `answers`
@@ -72,7 +72,15 @@ INSERT INTO `answers` (`answer_id`, `answer_rid`, `fk_answer_question_id`) VALUE
 (10, '5hvmw39732272370', 9),
 (11, 'xkrj793807443568', 10),
 (12, 'cw96830919154611', 11),
-(13, 'uzj5k54538141829', 12);
+(13, 'uzj5k54538141829', 12),
+(14, '0z9tl85707221504', 13),
+(15, '8m5vh15865168911', 14),
+(16, 'ki3wa62030488575', 15),
+(17, 'yxikh23022925300', 16),
+(18, 'huqgz20598197933', 17),
+(19, '0hjte87611864529', 18),
+(20, 'umi3s75138300987', 19),
+(21, 'qefv891015835192', 20);
 
 -- --------------------------------------------------------
 
@@ -90,15 +98,16 @@ CREATE TABLE IF NOT EXISTS `history` (
   `fk_history_user_id` int(40) NOT NULL,
   `fk_history_trivia_id` int(40) NOT NULL,
   PRIMARY KEY (`history_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `history`
 --
 
 INSERT INTO `history` (`history_id`, `history_score`, `history_right`, `history_wrong`, `history_date`, `fk_history_user_id`, `fk_history_trivia_id`) VALUES
-(1, 5, 5, 5, '2022-05-30 10:24:41pm', 1, 2),
-(2, 4, 4, 6, '2022-05-30 10:26:27pm', 2, 2);
+(9, 1, 1, 0, '2022-06-20 12:05:46am', 14, 2),
+(10, 14, 14, 6, '2022-06-20 12:08:35am', 15, 2),
+(11, 1, 1, 0, '2022-06-20 01:14:01am', 16, 2);
 
 -- --------------------------------------------------------
 
@@ -113,7 +122,7 @@ CREATE TABLE IF NOT EXISTS `options` (
   `option_list` varchar(254) NOT NULL,
   `fk_option_question_id` int(40) NOT NULL,
   PRIMARY KEY (`option_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=49 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=81 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `options`
@@ -167,7 +176,39 @@ INSERT INTO `options` (`option_id`, `question_rid`, `option_list`, `fk_option_qu
 (45, 'uzj5k54538141829', 'to', 12),
 (46, 'sjm6216457247376', 'toooo', 12),
 (47, 'i4dhs47151162396', 'toooooo', 12),
-(48, '8n6mb7232576105', 'weeeeee', 12);
+(48, '8n6mb7232576105', 'weeeeee', 12),
+(49, '0z9tl85707221504', 'yes', 13),
+(50, '54b7w2894326086', 'no', 13),
+(51, 'xyu3c35072587952', 'maybe', 13),
+(52, '1qedr53842999092', 'im not', 13),
+(53, '8m5vh15865168911', 'physical media', 14),
+(54, '07dko72382349230', 'vehicle', 14),
+(55, 'j4rlk54417314362', 'vinyl', 14),
+(56, '0agid96752538692', 'kaset', 14),
+(57, 'ki3wa62030488575', 'cool', 15),
+(58, 'c5pr463383051248', 'hot', 15),
+(59, 'kt9cr58143772557', 'drown', 15),
+(60, '4vium55577470246', 'saliva', 15),
+(61, 'yxikh23022925300', 'one upon a time', 16),
+(62, 'n5kwq7531100620', 'did you know', 16),
+(63, '7d3q926242048505', 'how did', 16),
+(64, 'halrq36653534477', 'hell yea', 16),
+(65, 'huqgz20598197933', 'fine', 17),
+(66, 'cvhlj70193240827', 'not fine', 17),
+(67, 'yjns135081872303', 'file', 17),
+(68, '5uo3725347834777', 'tank', 17),
+(69, '0hjte87611864529', 'fantasy', 18),
+(70, 'xg2qv61217698275', 'dun know', 18),
+(71, 'rkpc160674801588', 'work', 18),
+(72, 'j4dhp42381274126', 'balanc', 18),
+(73, 'umi3s75138300987', 'yes', 19),
+(74, 'njpvc89242576055', 'no', 19),
+(75, 'egfco32702186317', 'maybe', 19),
+(76, 'sb8my85570054114', 'not', 19),
+(77, 'qefv891015835192', 'no', 20),
+(78, 'lum0277926334636', 'yes', 20),
+(79, 'ygbl21464746295', 'maybe', 20),
+(80, '8axvr30790686664', 'nottt', 20);
 
 -- --------------------------------------------------------
 
@@ -182,7 +223,7 @@ CREATE TABLE IF NOT EXISTS `questions` (
   `question_choice` int(40) NOT NULL,
   `fk_question_trivia_id` int(40) NOT NULL,
   PRIMARY KEY (`question_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `questions`
@@ -200,7 +241,15 @@ INSERT INTO `questions` (`question_id`, `question`, `question_choice`, `fk_quest
 (9, 'what is cat', 4, 2),
 (10, 'what car im buyin', 4, 2),
 (11, 'test', 4, 2),
-(12, 'test2', 4, 2);
+(12, 'test2', 4, 2),
+(13, 'are you man', 4, 2),
+(14, 'what is cd', 4, 2),
+(15, 'what is fan', 4, 2),
+(16, 'tell me story', 4, 2),
+(17, 'how do yo do', 4, 2),
+(18, 'what is life', 4, 2),
+(19, 'do you smoke', 4, 2),
+(20, 'do you drink', 4, 2);
 
 -- --------------------------------------------------------
 
@@ -225,7 +274,7 @@ CREATE TABLE IF NOT EXISTS `trivia_type` (
 
 INSERT INTO `trivia_type` (`type_id`, `type_title`, `type_total`, `total_minute`, `type_date`, `type_priority`) VALUES
 (2, 'test', 20, 20, '29-05-2022', 'yes'),
-(5, 'anniversary', 10, 10, '12-06-2022', 'no');
+(5, 'anniversary', 20, 20, '12-06-2022', 'no');
 
 -- --------------------------------------------------------
 
@@ -238,15 +287,20 @@ CREATE TABLE IF NOT EXISTS `user` (
   `user_id` int(40) NOT NULL AUTO_INCREMENT,
   `user_name` varchar(40) NOT NULL,
   `user_staffid` varchar(40) NOT NULL,
+  `has_submit` varchar(40) NOT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`user_id`, `user_name`, `user_staffid`) VALUES
-(4, 'test1', '123');
+INSERT INTO `user` (`user_id`, `user_name`, `user_staffid`, `has_submit`) VALUES
+(15, 'ameirul', '123456', 'yes'),
+(14, 'ameirul', '123', 'yes'),
+(16, 'ameirul', '1', 'yes'),
+(17, 'hell', '12345678', 'no'),
+(18, 'qq', '1234567890', 'no');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
