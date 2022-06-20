@@ -18,6 +18,7 @@
       session_start();
       $staffNo = $_SESSION['staffNo'];
       $name = $_SESSION['name'];
+      
   ?>
 
 <body>
@@ -67,8 +68,23 @@
 
                             $queryQuiz = mysqli_query($con,"SELECT * FROM user WHERE user_staffid= '$staffNo'");
                             $resultQuiz = mysqli_fetch_array($queryQuiz);
+
+                            $query_countactive = mysqli_query($con,"SELECT count(*) FROM questions WHERE fk_question_trivia_id = '$type_id'");
+                            $result_countactive = mysqli_fetch_array($query_countactive);
+                            $questionCount = $result_countactive[0];
+
                             if($resultQuiz['has_submit']=='no'){
+                                function randomGen($min, $max, $quantity) {
+                                  $numbers = range($min, $max);
+                                  shuffle($numbers);
+                                  return array_slice($numbers, 0, $quantity);
+                                }
+                                $r = (randomGen(1,$questionCount,$type_total));
+                                $_SESSION['arr'] = $r;
+                                $arrlength = count($r);
                                 echo '<a href="account.php?q=quiz&step=2&eid='.$type_id.'&n=1&t='.$type_total.'" class="btn btn-primary">Lets Play</a>';
+                                
+                               
                             }else{
                                 echo '<b>You have already submitted</b>';
                             }
@@ -79,16 +95,18 @@
             </div>
             <?php }?>
             <?php if(@$_GET['q']== 'quiz' && @$_GET['step']== 2){
+                $arr = $_SESSION['arr'];
                 $eid = @$_GET['eid'];
                 $sn=@$_GET['n'];
                 $total = @$_GET['t'];
-                $query_allQuest = mysqli_query($con,"SELECT * FROM questions WHERE question_id='$sn' AND fk_question_trivia_id='$eid'"); 
+                $rand = $arr[$sn-1];
+                $query_allQuest = mysqli_query($con,"SELECT * FROM questions WHERE question_count='$rand' AND fk_question_trivia_id='$eid'"); 
                 echo '<div class="card shadow-lg bg-body rounded" style="margin:5%">';
                 echo '<div class="card-body">';
                 while($row=mysqli_fetch_array($query_allQuest)){
                     $qns = $row['question'];
                     $qid = $row['question_id'];
-                    echo '<b>Question &nbsp;'.$sn.'&nbsp;::<br />'.$qns.'</b><br />';
+                    echo '<b>Question &nbsp;'.$sn.'&nbsp;::<br />'.$qns.'</b>';
                 }
                 $option_query=mysqli_query($con,"SELECT * FROM options WHERE fk_option_question_id ='$qid' ORDER BY RAND()");
                 echo '<form action="update.php?q=quiz&step=2&eid='.$eid.'&n='.$sn.'&t='.$total.'&qid='.$qid.'" method="POST"  class="form-horizontal">

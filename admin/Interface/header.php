@@ -24,6 +24,14 @@
     <link rel="stylesheet" type="text/css" href="Interface/style/DataTables/css/jquery.dataTables.css">
     <link href="Interface/style/summernote/summernote-lite.css" rel="stylesheet">
     <!--<link rel="stylesheet" href="Interface/style/DataTables/dataTables.bootstrap5.min.css">-->
+    <script src="Interface/style/tinymce/js/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+      
+      tinymce.init({
+        selector: '#mytextarea',
+        height: 500,
+        });
+    </script>
   </head>
   <body>
 

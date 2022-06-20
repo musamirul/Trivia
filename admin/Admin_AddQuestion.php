@@ -139,12 +139,12 @@
         <div class="modal-header">
         <h5 class="modal-title" id="createTrivia">Create New Question</strong></h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
         <form method="POST">
+        <div class="modal-body">
             <div class="row mb-3 mt-4">
                 <label class="col-form-label">Enter Question Title</label>
                 <div class="col-sm-12">
-                    <textarea id="summernote_health" class="form-control" rows="3" cols="500" name="question" placeholder="Enter question" required></textarea>
+                    <textarea id="summernote" class="form-control" rows="3" cols="500" name="question" placeholder="Enter question" required></textarea>
                 </div>
             </div>
             <div class="row mb-3">
@@ -174,7 +174,7 @@
         $wrongOne_rid = $_POST['wrongOne_rid'];
         $wrongTwo_rid = $_POST['wrongTwo_rid'];
         $wrongThree_rid = $_POST['wrongThree_rid'];
-
+        
         $Quest_id = $_POST['question_id'];
         $query_addcorrect = mysqli_query($con,"INSERT INTO answers(answer_rid, fk_answer_question_id) VALUES ('$correct_rid','$Quest_id')");
 
@@ -196,12 +196,18 @@
 <?php
     if(isset($_POST['createQuestion'])){
 
+        $trivia = $_SESSION['trivia'];
+        $query_countactive = mysqli_query($con,"SELECT count(*) FROM questions WHERE fk_question_trivia_id = '$trivia'");
+        $result_countactive = mysqli_fetch_array($query_countactive);
+        $questionCount = $result_countactive[0];
+        $questionCount++;
+
         //$question = $_POST['question'];
         $question = str_replace("'", '', $_POST['question']) ;
         $choice = $_POST['choice'];
-        $trivia = $_SESSION['trivia'];
-        $query_updateQuestion = mysqli_query($con,"INSERT INTO questions(question, question_choice, fk_question_trivia_id) 
-        VALUES ('$question','$choice','$trivia')");
+        
+        $query_updateQuestion = mysqli_query($con,"INSERT INTO questions(question, question_count, question_choice, fk_question_trivia_id) 
+        VALUES ('$question', '$questionCount', '$choice','$trivia')");
 
         echo '<script>window.location.href="home.php?page=Admin_AddQuestion"</script>';
     }
