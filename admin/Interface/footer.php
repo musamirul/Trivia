@@ -76,7 +76,7 @@
     $('#summernote_health').summernote({
       placeholder: 'Enter Article Text',
       tabsize: 2,
-      height: 800,
+      height: 400,
       toolbar: [
         ['style', ['style']],
         ['font', ['bold', 'underline', 'clear']],

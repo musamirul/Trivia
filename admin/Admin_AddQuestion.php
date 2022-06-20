@@ -6,11 +6,15 @@
     $id = $_SESSION['trivia'];
 ?>
 <h2>Create Question</h2>
-<form method="post">
+<!--<form method="post">
     <input type="text" name="question" placeholder="Enter question"/>
     <input type="number" name="choice" placeholder="Enter Total Choice"/>
     <button type="submit" name="createQuestion">Create Question</button>
-</form>
+</form>-->
+
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createQuestion">
+    Create New Question
+</button>
 
  <table id="example" class="display center" style="width: 100%; text-align: center; font-size: 13px;">
     <thead>
@@ -128,6 +132,37 @@
         ?>
     </tbody>
 </table>
+
+<div class="modal fade" id="createQuestion" tabindex="-1" aria-labelledby="editModalLabel" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="createTrivia">Create New Question</strong></h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        <form method="POST">
+            <div class="row mb-3 mt-4">
+                <label class="col-form-label">Enter Question Title</label>
+                <div class="col-sm-12">
+                    <textarea id="summernote_health" class="form-control" rows="3" cols="500" name="question" placeholder="Enter question" required></textarea>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-form-label">Total Choice</label>
+                <div class="col-sm-12">
+                    <input type="number" class="form-control" name="choice" placeholder="Enter Total Choice" required/>
+                </div>
+            </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="submit" name="createQuestion">Create Question</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+        </form>   
+    </div>
+    </div>
+</div>
+
+
 <?php
     if(isset($_POST['saveDetail'])){
         $correct = $_POST['correct'];
@@ -156,13 +191,13 @@
         VALUES ('$wrongThree_rid','$wrong_three','$Quest_id')");
 
         echo '<script>window.location.href="home.php?page=Admin_AddQuestion"</script>';
-
     }
 ?>
 <?php
     if(isset($_POST['createQuestion'])){
 
-        $question = $_POST['question'];
+        //$question = $_POST['question'];
+        $question = str_replace("'", '', $_POST['question']) ;
         $choice = $_POST['choice'];
         $trivia = $_SESSION['trivia'];
         $query_updateQuestion = mysqli_query($con,"INSERT INTO questions(question, question_choice, fk_question_trivia_id) 
