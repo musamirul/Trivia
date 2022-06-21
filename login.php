@@ -164,5 +164,8 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
   return new bootstrap.Tooltip(tooltipTriggerEl)
 })
 </script>
+<script>
+  window.localStorage.clear();
+</script>
 </body>
 </html>

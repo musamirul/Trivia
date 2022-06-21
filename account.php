@@ -20,7 +20,11 @@
       $name = $_SESSION['name'];
       
   ?>
-
+<script type="text/javascript" >
+   function preventBack(){window.history.forward();}
+    setTimeout("preventBack()", 0);
+    window.onunload=function(){null};
+</script>
 <body>
 <nav class="navbar navbar-expand-lg bg-dark">
   <div class="container-fluid">
@@ -41,13 +45,7 @@
 
 <div class="container">
     <div class="row">
-      <?php 
-        if(@$_GET['q']== 'quiz' && @$_GET['step']== 2){
-      ?>
-        You will be logged out in : <p id="demo"></p>
-      <?php
-        }
-      ?>
+      
     </div>
     <div class="row">
         <div class="col">
@@ -111,11 +109,26 @@
                 $rand = $arr[$sn-1];
                 $query_allQuest = mysqli_query($con,"SELECT * FROM questions WHERE question_count='$rand' AND fk_question_trivia_id='$eid'"); 
                 echo '<div class="card shadow-lg bg-body rounded" style="margin:5%">';
+                echo '<div class="card-header">';
+                echo '<b><span class="fs-4">Question &nbsp;'.$sn.'&nbsp;</span></b>';
+            ?>
+              <?php 
+                if(@$_GET['q']== 'quiz' && @$_GET['step']== 2){
+              ?>
+                  <button type="button" class="btn btn-primary float-end">
+                      Time Left <span class="badge bg-dark p-1"><span id="timer"></span></span>
+                  </button>
+              <?php
+                }
+              ?>
+              
+            <?php
+                echo '</div>';
                 echo '<div class="card-body">';
                 while($row=mysqli_fetch_array($query_allQuest)){
                     $qns = $row['question'];
                     $qid = $row['question_id'];
-                    echo '<b>Question &nbsp;'.$sn.'&nbsp;::<br />'.$qns.'</b>';
+                    echo '<b><span class="fs-5">'.$qns.'</span></b>';
                 }
                 $option_query=mysqli_query($con,"SELECT * FROM options WHERE fk_option_question_id ='$qid' ORDER BY RAND()");
                 echo '<form action="update.php?q=quiz&step=2&eid='.$eid.'&n='.$sn.'&t='.$total.'&qid='.$qid.'" method="POST"  class="form-horizontal">
@@ -208,72 +221,55 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
 
 <script>
-var time = 12000; // This is the time allowed
-var saved_countdown = localStorage.getItem('saved_countdown');
+window.onload = function() {
 
-if(saved_countdown == null) {
-    // Set the time we're counting down to using the time allowed
-    var new_countdown = new Date().getTime() + (time + 2) * 1000;
+    if(typeof localStorage.getItem("min") !== 'undefined' && typeof localStorage.getItem("sec") !== 'undefined' && localStorage.getItem("min")!= null && localStorage.getItem("sec")!= null ){
+        var min = localStorage.getItem("min");
+        var sec = localStorage.getItem("sec");
+    }
+    else {
+       console.log("c2");
+       var min = "0"+20;
+       var sec = "0"+0;
+    }
+    var time;
 
-    time = new_countdown;
-    localStorage.setItem('saved_countdown', new_countdown);
-} else {
-    time = saved_countdown;
+    setInterval(function()
+    {
+
+        localStorage.setItem("min", min);
+        localStorage.setItem("sec", sec);
+        time= min +" : "+ sec;
+        document.getElementById("timer").innerHTML = time ;
+        if(sec == 00)
+        {
+            if(min !=0)
+            {
+                min--;
+                sec=59;
+                if(min < 10)
+                {
+                    min="0"+min;
+                }
+            }
+        }
+        else
+        {
+            sec--;
+            if(sec < 10)
+            {
+                sec="0"+sec;
+            }
+        }
+
+        if(sec <= 0 && min <=0) {
+            localStorage.removeItem('min');
+            localStorage.removeItem('sec');
+            window.location="logout.php";
+        }
+    },1000);
 }
 
-// Update the count down every 1 second
-var x = setInterval(() => {
-
-    // Get today's date and time
-    var now = new Date().getTime();
-
-    // Find the distance between now and the allowed time
-    var distance = time - now;
-
-    // Time counter
-    var counter = Math.floor((distance % (1000 * 60)) / 1000);
-
-    // Output the result in an element with id="demo"
-    document.getElementById("demo").innerHTML = counter + " s";
-        
-    // If the count down is over, write some text 
-    if (counter <= 0) {
-        clearInterval(x);
-        localStorage.removeItem('saved_countdown');
-        window.location="logout.php";
-    }
-}, 1000);
 </script>
-<script>
-	//define your time in second
-		var c=1200;
-        var t;
-        timedCount();
-
-        function timedCount()
-		{
-
-        	var hours = parseInt( c / 3600 ) % 24;
-        	var minutes = parseInt( c / 60 ) % 60;
-        	var seconds = c % 60;
-
-        	var result = (hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds  < 10 ? "0" + seconds : seconds);
-
-            
-        	$('#timer').html(result);
-            if(c == 0 )
-			{
-            	//setConfirmUnload(false);
-                //$("#quiz_form").submit();
-				window.location="logout.html";
-			}
-            c = c - 1;
-            t = setTimeout(function()
-			{
-			 timedCount()
-			},
-			1000);
-        }
-	</script>
 </body>
 </html>
