@@ -41,6 +41,15 @@
 
 <div class="container">
     <div class="row">
+      <?php 
+        if(@$_GET['q']== 'quiz' && @$_GET['step']== 2){
+      ?>
+        You will be logged out in : <p id="demo"></p>
+      <?php
+        }
+      ?>
+    </div>
+    <div class="row">
         <div class="col">
             <?php if(@$_GET['q']==1){ ?>
             <div class="position-absolute top-50 start-50 translate-middle">
@@ -196,5 +205,75 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
   return new bootstrap.Tooltip(tooltipTriggerEl)
 })
 </script>
+
+
+<script>
+var time = 12000; // This is the time allowed
+var saved_countdown = localStorage.getItem('saved_countdown');
+
+if(saved_countdown == null) {
+    // Set the time we're counting down to using the time allowed
+    var new_countdown = new Date().getTime() + (time + 2) * 1000;
+
+    time = new_countdown;
+    localStorage.setItem('saved_countdown', new_countdown);
+} else {
+    time = saved_countdown;
+}
+
+// Update the count down every 1 second
+var x = setInterval(() => {
+
+    // Get today's date and time
+    var now = new Date().getTime();
+
+    // Find the distance between now and the allowed time
+    var distance = time - now;
+
+    // Time counter
+    var counter = Math.floor((distance % (1000 * 60)) / 1000);
+
+    // Output the result in an element with id="demo"
+    document.getElementById("demo").innerHTML = counter + " s";
+        
+    // If the count down is over, write some text 
+    if (counter <= 0) {
+        clearInterval(x);
+        localStorage.removeItem('saved_countdown');
+        window.location="logout.php";
+    }
+}, 1000);
+</script>
+<script>
+	//define your time in second
+		var c=1200;
+        var t;
+        timedCount();
+
+        function timedCount()
+		{
+
+        	var hours = parseInt( c / 3600 ) % 24;
+        	var minutes = parseInt( c / 60 ) % 60;
+        	var seconds = c % 60;
+
+        	var result = (hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds  < 10 ? "0" + seconds : seconds);
+
+            
+        	$('#timer').html(result);
+            if(c == 0 )
+			{
+            	//setConfirmUnload(false);
+                //$("#quiz_form").submit();
+				window.location="logout.html";
+			}
+            c = c - 1;
+            t = setTimeout(function()
+			{
+			 timedCount()
+			},
+			1000);
+        }
+	</script>
 </body>
 </html>

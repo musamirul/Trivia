@@ -103,5 +103,7 @@ if (toastTrigger) {
         no_results_text: "Oops, nothing found!"
       })
     </script>
+    </script>
+    </script>
   </body>
 </html>
